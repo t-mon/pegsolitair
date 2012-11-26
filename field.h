@@ -2,8 +2,6 @@
 #define FIELD_H
 
 #include <QObject>
-#include "fileparser.h"
-#include "gameboard.h"
 #include "iterator.h"
 
 class Field : public QObject

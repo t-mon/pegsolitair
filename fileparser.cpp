@@ -16,7 +16,7 @@ FileParser::FileParser(const char *pathToGraph) : m_filepath(pathToGraph)
 
 GameBoard FileParser::parse()
 {
-    cout << "pharese file " << m_filepath << endl << endl;
+    cout << "parese file " << m_filepath << endl << endl;
     int fields = 0;             // number of the field
     string fieldArray[257];     // array of lines from the file
     char line[50];              // a line from the file (never longer than 50 characters)
@@ -171,6 +171,7 @@ GameBoard FileParser::parse()
 void FileParser::createEmtyBoard()
 {
     Iterator gameIterator(m_gameBoard);
+    gameIterator.resetToFirst();
 
     for(int i = 1; i <= 37; i++){
         gameIterator.insert(false,i,0,0,0,0,0,0);
