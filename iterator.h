@@ -8,7 +8,6 @@
 
 class Field;
 class GameBoard;
-class FileParser;
 
 class Iterator : public QObject
 {
