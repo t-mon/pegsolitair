@@ -1,19 +1,24 @@
 #include "fileparser.h"
 
-
+#include <QDebug>
+#include <iostream>
+#include <stdlib.h>
+#include <fstream>
+#include <string.h>
 
 using namespace std;
 
 // ****************************************************************************************************
 // public members
 
-FileParser::FileParser(const char *pathToGraph) : m_filepath(pathToGraph)
+FileParser::FileParser(GameBoard &gameBoard) : m_gameBoard(gameBoard)
 {
+    m_filepath = "european.txt";
 }
 
-GameBoard FileParser::parse()
+void FileParser::parse()
 {
-    cout << "parese file " << m_filepath << endl << endl;
+    qDebug() <<  "parese file " << m_filepath;
     int fields = 0;             // number of the field
     string fieldArray[257];     // array of lines from the file
     char line[50];              // a line from the file (never longer than 50 characters)
@@ -27,7 +32,7 @@ GameBoard FileParser::parse()
         }
     }
     fileStream.close();
-    cout << fields << " fields found in the Graph.txt" << endl << endl;
+    qDebug() <<  fields << " fields found in the Graph.txt";
 
 
     // create a emty Board and safe it to the privat varable (gameBoard)
@@ -82,9 +87,9 @@ GameBoard FileParser::parse()
                     break;
                 }
             }
-            if (neighboursCount != 3){
-                cout << "error found in line " << fields << ": not the right amount of neighbors" << endl << endl;
-            }
+        }
+        if (neighboursCount != 3){
+            qDebug() << "error found in line " << fields << ": not the right amount of neighbors";
         }
         //cout << "in field " << fields << " are " << neighboursCount+1 << " neighbors" << endl;
 
@@ -161,8 +166,9 @@ GameBoard FileParser::parse()
         ++iterator;
     }
 
-    cout << "connections between fields created..." << endl << endl;
-    return m_gameBoard;
+    qDebug() << "connections between fields created...";
+    printFieldConnections();
+
 }
 
 void FileParser::createEmtyBoard()
@@ -171,8 +177,25 @@ void FileParser::createEmtyBoard()
     gameIterator.resetToFirst();
 
     for(int i = 1; i <= 37; i++){
-        gameIterator.insert(false,i,0,0,0,0,0,0);
+        gameIterator.insert(false,i,0,0,0,0,0,0,0);
         ++gameIterator;
     }
-    cout << "Emty board created. (all fields i one row with a continuous numeration) " << endl << endl;
+
+    qDebug() << "Emty board created. (all fields i one row with a continuous numeration) ";
+    //qDebug() << "Last field number: " << m_gameBoard.getLastField()->getFieldNumber();
+}
+
+void FileParser::printFieldConnections()
+{
+    Iterator iterator(m_gameBoard);
+    iterator.resetToFirst();
+    while(iterator.getCurrentField() != m_gameBoard.getLastField()){
+        qDebug() << "----------------------------------------------";
+        qDebug() << "Field"  << iterator.getCurrentField()->getFieldNumber() << "has neighbours:";
+        if(iterator.getCurrentField()->getNorthField()!=0)qDebug() << "\tn = " << iterator.getCurrentField()->getNorthField()->getFieldNumber();
+        if(iterator.getCurrentField()->getSouthField()!=0)qDebug() << "\ts = " << iterator.getCurrentField()->getSouthField()->getFieldNumber();
+        if(iterator.getCurrentField()->getEastField()!=0)qDebug() << "\te = " << iterator.getCurrentField()->getEastField()->getFieldNumber();
+        if(iterator.getCurrentField()->getWestField()!=0)qDebug() << "\tw = " << iterator.getCurrentField()->getWestField()->getFieldNumber();
+        ++iterator;
+    }
 }

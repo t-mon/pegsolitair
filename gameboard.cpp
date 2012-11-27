@@ -1,4 +1,6 @@
 #include "gameboard.h"
+#include "iterator.h"
+#include <QDebug>
 
 GameBoard::GameBoard(QObject *parent) :
     QObject(parent)
@@ -7,26 +9,48 @@ GameBoard::GameBoard(QObject *parent) :
     m_last = 0;
 }
 
-GameBoard::~GameBoard()
+Field *GameBoard::getFirstField()
 {
-    Field *temp = new Field;
-    // go through the list form the front
-    for (Field *n = m_first; n; ){
-        // actual point ist tmp
-        temp = n;
-        // go to the next field
-        n = n->m_next;
-        // and delete the temp field
-        delete temp;
-    }
-
+    return m_first;
 }
+
+Field *GameBoard::getLastField()
+{
+    return m_last;
+}
+
+void GameBoard::setFirstField(Field *first)
+{
+    m_first = first;
+}
+
+void GameBoard::setLastField(Field *last)
+{
+    m_last = last;
+}
+
 
 bool GameBoard::isEmpty()
 {
     // returns true if there is no Field in the board
     return (m_first == 0);
 }
+
+void GameBoard::printFieldConnections()
+{
+    Field* n = m_first;
+    while (n != m_last){
+        qDebug() << "Field" << n->getFieldNumber() << "has neighbours:";
+        qDebug() << "\tn = " << n->getNorthField()->getFieldNumber();
+        qDebug() << "\ts = " << n->getSouthField()->getFieldNumber();
+        qDebug() << "\te = " << n->getEastField()->getFieldNumber();
+        qDebug() << "\tw = " << n->getWestField()->getFieldNumber();
+        qDebug();
+        n = n->getNextField();
+    }
+
+}
+
 
 Field *GameBoard::addField(bool &occupied, int &number, Field* next, Field* previous, Field *north, Field *south, Field *east, Field *west, QObject *parent)
 {

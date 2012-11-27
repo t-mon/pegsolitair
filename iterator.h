@@ -12,7 +12,6 @@ class GameBoard;
 class Iterator : public QObject
 {
     Q_OBJECT
-    friend class FileParser;
 public:
     explicit Iterator(GameBoard &gameBoard, QObject *parent = 0);
     
@@ -30,6 +29,9 @@ public:
     Field* getEastField();
     Field* getWestField();
 
+    Field* getNextFromCurrentField();
+    Field* getPreviousFromCurrentField();
+
     int getCurrentNumber();
     bool getCurrentOccupacy();
 
@@ -45,7 +47,6 @@ public:
 
     // insert a new field and make the previous and next connection for it
     void insert(bool occupied, int number, Field* next, Field* previous, Field* north, Field* south, Field* east, Field* west, QObject *parent);
-
 
 private:
     Field* m_current;     // points to the current field

@@ -8,14 +8,14 @@ Iterator::Iterator(GameBoard &gameBoard, QObject *parent) :
 void Iterator::resetToFirst()
 {
     m_previous = 0;
-    m_current = m_gameBoard.m_first;
+    m_current = m_gameBoard.getFirstField();
 }
 
 int Iterator::operator ++()
 {
     if (m_current == NULL)		// reset current pointer
         if (m_previous == NULL)
-            m_current = m_gameBoard.m_first;
+            m_current = m_gameBoard.getFirstField();
         else
             m_current = m_previous->m_next;
     else				// advance current pointer
@@ -30,7 +30,7 @@ int Iterator::operator --()
 {
     if (m_current == NULL)		// reset current pointer
         if (m_previous == NULL)
-            m_current = m_gameBoard.m_first;
+            m_current = m_gameBoard.getFirstField();
         else
             m_current = m_previous->m_next;
     else				// advance current pointer
@@ -64,6 +64,16 @@ Field *Iterator::getEastField()
 Field *Iterator::getWestField()
 {
     return m_current->m_west;
+}
+
+Field *Iterator::getNextFromCurrentField()
+{
+    return m_current->m_next;
+}
+
+Field *Iterator::getPreviousFromCurrentField()
+{
+    return m_current->m_previous;
 }
 
 int Iterator::getCurrentNumber()
@@ -148,12 +158,12 @@ void Iterator::insert(bool occupied, int number, Field* next, Field* previous, F
 
     // if the board is emty the new field is the first and last of the board
     if (m_gameBoard.isEmpty()){
-        m_gameBoard.m_first = p;
-        m_gameBoard.m_last  = p;
+        m_gameBoard.setFirstField(p);
+        m_gameBoard.setLastField(p);
     }else{
         // new field is not the first field
-        if (m_current==m_gameBoard.m_last){
-            m_gameBoard.m_last=p;
+        if (m_current==m_gameBoard.getLastField()){
+            m_gameBoard.setLastField(p);
         }
         // connect the new field with the current field
         p->m_next = m_current->m_next;

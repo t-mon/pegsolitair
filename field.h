@@ -2,18 +2,25 @@
 #define FIELD_H
 
 #include <QObject>
-#include "iterator.h"
+#include <iostream>
+
 
 class Field : public QObject
 {
     Q_OBJECT
-
-    friend class GameBoard;
     friend class Iterator;
 
 public:
     explicit Field(bool occupied = false, int number = 0, Field* next = 0, Field* previous = 0, Field* north = 0, Field* south= 0, Field* east = 0, Field* west = 0, QObject *parent = 0);
-    
+    int getFieldNumber();
+    Field* getNorthField();
+    Field* getSouthField();
+    Field* getEastField();
+    Field* getWestField();
+
+    Field* getNextField();
+    Field* getPreviousField();
+
 private:
     // data from this field
     bool m_occupied;          // true = occupied, flase = free
@@ -27,10 +34,6 @@ private:
     Field * m_south;
     Field * m_east;
     Field * m_west;
-
-signals:
-    
-public slots:
     
 };
 
