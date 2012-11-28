@@ -35,7 +35,9 @@ SOURCES += main.cpp \
     field.cpp \
     gameboard.cpp \
     iterator.cpp \
-    fileparser.cpp
+    fileparser.cpp \
+    gameengine.cpp \
+    searchalgorithm.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -46,4 +48,9 @@ HEADERS += \
     field.h \
     gameboard.h \
     iterator.h \
-    fileparser.h
+    fileparser.h \
+    gameengine.h \
+    searchalgorithm.h
+
+OTHER_FILES += \
+    european.txt

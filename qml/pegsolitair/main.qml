@@ -2,29 +2,88 @@
 import QtQuick 1.1
 
 Rectangle {
-    id: gameBoard
-    width: 600
-    height: 600
-    Row{
-        anchors.fill: parent
-        spacing: 10
-        //anchors.centerIn: parent
-        Grid{
-            rows: 2
-            columns: 3
-            spacing: 10
+    id: window
+    width: 700
+    height: 700
+    Rectangle{
+        id: gameBoard
+        width: window.width -40
+        height: window.height -40
+        anchors.centerIn: parent
 
+        Column{
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-            FieldItem{
-                fieldNumber: 1
+            anchors.top: parent.top - 30
+            spacing: 10
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
+                Repeater{
+                    model: 3
+                    FieldItem{
+                        fieldNumber: index + 1
+                    }
+                }
             }
-            FieldItem{
-                fieldNumber: 2
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
+                Repeater{
+                    model: 5
+                    FieldItem{
+                        fieldNumber: index + 4
+                    }
+                }
             }
-            FieldItem{
-                fieldNumber: 3
-
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
+                Repeater{
+                    model: 7
+                    FieldItem{
+                        fieldNumber: index + 9
+                    }
+                }
+            }
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
+                Repeater{
+                    model: 7
+                    FieldItem{
+                        fieldNumber: index + 16
+                    }
+                }
+            }
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
+                Repeater{
+                    model: 7
+                    FieldItem{
+                        fieldNumber: index + 23
+                    }
+                }
+            }
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
+                Repeater{
+                    model: 5
+                    FieldItem{
+                        fieldNumber: index + 30
+                    }
+                }
+            }
+            Row{
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 10
+                Repeater{
+                    model: 3
+                    FieldItem{
+                        fieldNumber: index + 35
+                    }
+                }
             }
         }
     }

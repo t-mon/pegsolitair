@@ -6,6 +6,7 @@
 #include "fileparser.h"
 #include "gameboard.h"
 #include "iterator.h"
+#include "gameengine.h"
 
 class Core : public QObject
 {
@@ -14,7 +15,7 @@ public:
 
 private:
     QmlApplicationViewer *m_viewer;
-    GameBoard m_board;
+    GameEngine *m_engine;
 };
 
 #endif // CORE_H

@@ -4,16 +4,15 @@ import QtQuick 1.1
 Item {
     id: fieldItem
     property int fieldNumber
-    width: parent.width/8
-    height: parent.height/8
+    width: 80
+    height: 80
     Rectangle{
         anchors.fill: parent
-        radius: 5
+        radius: 10
         border.color: "black"
         color: "gray"
         Text {
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
+            anchors.centerIn: parent
             id: fieldText
             text: fieldNumber
         }

@@ -36,21 +36,6 @@ bool GameBoard::isEmpty()
     return (m_first == 0);
 }
 
-void GameBoard::printFieldConnections()
-{
-    Field* n = m_first;
-    while (n != m_last){
-        qDebug() << "Field" << n->getFieldNumber() << "has neighbours:";
-        qDebug() << "\tn = " << n->getNorthField()->getFieldNumber();
-        qDebug() << "\ts = " << n->getSouthField()->getFieldNumber();
-        qDebug() << "\te = " << n->getEastField()->getFieldNumber();
-        qDebug() << "\tw = " << n->getWestField()->getFieldNumber();
-        qDebug();
-        n = n->getNextField();
-    }
-
-}
-
 
 Field *GameBoard::addField(bool &occupied, int &number, Field* next, Field* previous, Field *north, Field *south, Field *east, Field *west, QObject *parent)
 {

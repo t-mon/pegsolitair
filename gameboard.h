@@ -20,7 +20,6 @@ public:
     void setLastField(Field* last);
     Field* addField(bool &occupied, int &number, Field* next, Field* previous, Field* north, Field* south, Field* east, Field* west, QObject *parent);
     bool isEmpty();         // returns true if the board is emtpty
-    void printFieldConnections();
 
 
 private:
