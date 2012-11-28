@@ -3,8 +3,8 @@
 GameEngine::GameEngine(QObject *parent) :
     QObject(parent)
 {
-    FileParser parser(m_board);
-    parser.parse();
+    FileParser *parser;
+    m_gameBoard = parser->createBoard("european.txt");
     // now the empty linked Board is created
 
 }

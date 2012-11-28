@@ -1,6 +1,6 @@
 #include "iterator.h"
 
-Iterator::Iterator(GameBoard &gameBoard, QObject *parent) :
+Iterator::Iterator(GameBoard *gameBoard, QObject *parent) :
     m_gameBoard(gameBoard), QObject(parent)
 {
 }
@@ -8,14 +8,14 @@ Iterator::Iterator(GameBoard &gameBoard, QObject *parent) :
 void Iterator::resetToFirst()
 {
     m_previous = 0;
-    m_current = m_gameBoard.getFirstField();
+    m_current = m_gameBoard->getFirstField();
 }
 
 int Iterator::operator ++()
 {
     if (m_current == NULL)		// reset current pointer
         if (m_previous == NULL)
-            m_current = m_gameBoard.getFirstField();
+            m_current = m_gameBoard->getFirstField();
         else
             m_current = m_previous->m_next;
     else				// advance current pointer
@@ -30,7 +30,7 @@ int Iterator::operator --()
 {
     if (m_current == NULL)		// reset current pointer
         if (m_previous == NULL)
-            m_current = m_gameBoard.getFirstField();
+            m_current = m_gameBoard->getFirstField();
         else
             m_current = m_previous->m_next;
     else				// advance current pointer
@@ -154,16 +154,16 @@ bool Iterator::goWest()
 
 void Iterator::insert(bool occupied, int number, Field* next, Field* previous, Field* north, Field* south, Field* east, Field* west, QObject *parent)
 {
-    Field *p = m_gameBoard.addField(occupied,number,next,previous,north,south,east,west,parent);
+    Field *p = m_gameBoard->addField(occupied,number,next,previous,north,south,east,west,parent);
 
     // if the board is emty the new field is the first and last of the board
-    if (m_gameBoard.isEmpty()){
-        m_gameBoard.setFirstField(p);
-        m_gameBoard.setLastField(p);
+    if (m_gameBoard->isEmpty()){
+        m_gameBoard->setFirstField(p);
+        m_gameBoard->setLastField(p);
     }else{
         // new field is not the first field
-        if (m_current==m_gameBoard.getLastField()){
-            m_gameBoard.setLastField(p);
+        if (m_current==m_gameBoard->getLastField()){
+            m_gameBoard->setLastField(p);
         }
         // connect the new field with the current field
         p->m_next = m_current->m_next;

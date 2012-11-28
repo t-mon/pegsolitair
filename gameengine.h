@@ -13,7 +13,7 @@ public:
     explicit GameEngine(QObject *parent = 0);
 
 private:
-    GameBoard m_board;
+    GameBoard *m_gameBoard;
 
 signals:
     

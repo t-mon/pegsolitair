@@ -13,7 +13,7 @@ class Iterator : public QObject
 {
     Q_OBJECT
 public:
-    explicit Iterator(GameBoard &gameBoard, QObject *parent = 0);
+    explicit Iterator(GameBoard *gameBoard, QObject *parent = 0);
     
     // reset the iterator to the first field (field number 1)
     void resetToFirst();
@@ -52,7 +52,7 @@ private:
     Field* m_current;     // points to the current field
     Field* m_previous;    // points to the previous field
 
-    GameBoard &m_gameBoard;   // board to transverse with this iterator
+    GameBoard *m_gameBoard;   // board to transverse with this iterator
 
 
 signals:
