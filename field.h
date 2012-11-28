@@ -12,6 +12,8 @@ class Field : public QObject
     friend class Iterator;
 
     Q_PROPERTY(bool occupied READ occupied NOTIFY occupiedChanged)
+    Q_PROPERTY(bool markField READ markField NOTIFY markFieldChanged)
+
 
 public:
     explicit Field(bool occupied = false, int number = 0, Field* next = 0, Field* previous = 0, Field* north = 0, Field* south= 0, Field* east = 0, Field* west = 0, QObject *parent = 0);
@@ -25,13 +27,19 @@ public:
     Field* getPreviousField();
 
     bool occupied() const;
+    bool markField() const;
+
+    void setOccupied(bool occupied);
+    void setMarked(bool marked);
 
 signals:
     void occupiedChanged();
+    void markFieldChanged();
 
 private:
     // data from this field
     bool m_occupied;          // true = occupied, flase = free
+    bool m_marked;
     int m_number;             // the fieldnumber
 
     // generate pointer

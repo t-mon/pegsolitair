@@ -48,3 +48,20 @@ bool Field::occupied() const
     return m_occupied;
 }
 
+bool Field::markField() const
+{
+    return m_marked;
+}
+
+void Field::setOccupied(bool occupied)
+{
+    m_occupied = occupied;
+    emit occupiedChanged();
+}
+
+void Field::setMarked(bool marked)
+{
+    m_marked = marked;
+    emit markFieldChanged();
+}
+

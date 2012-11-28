@@ -15,10 +15,18 @@ public:
     Q_INVOKABLE GameBoard *board();
 private:
     GameBoard *m_gameBoard;
+    bool canJumpNorth;
+    bool canJumpSouth;
+    bool canJumpEast;
+    bool canJumpWest;
+
+    bool getJumpPossibilitys(int fieldNumber);
+
 
 signals:
     
 public slots:
+    void fieldClicked(int fieldNumber);
     
 };
 

@@ -9,13 +9,17 @@ Item {
     height: 80
     Rectangle{
         anchors.fill: parent
-        radius: 10
+        radius: 15
         border.color: "black"
         color: board.fieldAt(fieldNumber).occupied ? "red" : "green"
         Text {
             anchors.centerIn: parent
             id: fieldText
             text: fieldNumber
+        }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: engine.fieldClicked(fieldNumber)
         }
     }
 }

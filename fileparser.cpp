@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <string.h>
+#include <QFile>
 #include "iterator.h"
 #include "field.h"
 
@@ -19,7 +20,6 @@ FileParser::FileParser()
 
 GameBoard *FileParser::createBoard(const char* file)
 {
-    int fieldNumber = 0;
     qDebug() <<  "parese file " << file;
     int fields = 0;             // number of the field
     string fieldArray[257];     // array of lines from the file
@@ -52,7 +52,7 @@ GameBoard *FileParser::createBoard(const char* file)
     Iterator gameIterator(m_gameBoard);
     gameIterator.resetToFirst();
 
-    for(int i = 1; i <= fields; i++){
+    for(int i = 0; i < fields; i++){
         gameIterator.insert((i % 2) == 0 ? false : true,i,0,0,0,0,0,0,0);
         ++gameIterator;
     }
@@ -87,7 +87,7 @@ GameBoard *FileParser::createBoard(const char* file)
             // if a ':' was found: safe the position of ':' in the doublePoint variable
             if (fieldArray[i].substr(j,1) == ":"){
                 doublePoint = j;
-                cout << "\tdouble point: " << doublePoint << endl;
+                //cout << "\tdouble point: " << doublePoint << endl;
             }
             // if a ',' was found: safe the position of the ','
             if (fieldArray[i].substr(j,1) == ","){
@@ -97,15 +97,15 @@ GameBoard *FileParser::createBoard(const char* file)
                 switch(neighboursCount){
                 case 1:
                     firstColon = j;
-                    cout << "\tfirst colon: " << firstColon << endl;
+                    //cout << "\tfirst colon: " << firstColon << endl;
                     break;
                 case 2:
                     secondColon = j;
-                    cout << "\tsecond colon: " << secondColon << endl;
+                    //cout << "\tsecond colon: " << secondColon << endl;
                     break;
                 case 3:
                     thirdColon = j;
-                    cout << "\tthird colon: " << thirdColon << endl << endl << endl;
+                    //cout << "\tthird colon: " << thirdColon << endl << endl << endl;
                     break;
                 }
             }
