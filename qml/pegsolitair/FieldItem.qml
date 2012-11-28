@@ -10,8 +10,10 @@ Item {
     Rectangle{
         anchors.fill: parent
         radius: 15
-        border.color: "black"
-        color: board.fieldAt(fieldNumber).occupied ? "red" : "green"
+        border.color: board.fieldAt(fieldNumber).markField ? "blue" : "black"
+        border.width: 5
+        //border.color: "black"
+        color: board.fieldAt(fieldNumber).occupied ? "green" : "white"
         Text {
             anchors.centerIn: parent
             id: fieldText
