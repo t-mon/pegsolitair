@@ -19,6 +19,7 @@ FileParser::FileParser()
 
 GameBoard *FileParser::createBoard(const char* file)
 {
+    int fieldNumber = 0;
     qDebug() <<  "parese file " << file;
     int fields = 0;             // number of the field
     string fieldArray[257];     // array of lines from the file
@@ -86,7 +87,7 @@ GameBoard *FileParser::createBoard(const char* file)
             // if a ':' was found: safe the position of ':' in the doublePoint variable
             if (fieldArray[i].substr(j,1) == ":"){
                 doublePoint = j;
-                //cout << "\tdouble point: " << doublePoint << endl;
+                cout << "\tdouble point: " << doublePoint << endl;
             }
             // if a ',' was found: safe the position of the ','
             if (fieldArray[i].substr(j,1) == ","){
@@ -96,15 +97,15 @@ GameBoard *FileParser::createBoard(const char* file)
                 switch(neighboursCount){
                 case 1:
                     firstColon = j;
-                    //cout << "\tfirst colon: " << firstColon << endl;
+                    cout << "\tfirst colon: " << firstColon << endl;
                     break;
                 case 2:
                     secondColon = j;
-                    //cout << "\tsecond colon: " << secondColon << endl;
+                    cout << "\tsecond colon: " << secondColon << endl;
                     break;
                 case 3:
                     thirdColon = j;
-                    //cout << "\tthird colon: " << thirdColon << endl << endl << endl;
+                    cout << "\tthird colon: " << thirdColon << endl << endl << endl;
                     break;
                 }
             }
@@ -116,22 +117,26 @@ GameBoard *FileParser::createBoard(const char* file)
 
         //************************************************************************************************
         //SAFE NEIGHBOURS
-
+        string fieldStr = fieldArray[i].substr(0,doublePoint);
         string westStr = fieldArray[i].substr(doublePoint+1,firstColon-doublePoint);
         string eastStr = fieldArray[i].substr(firstColon+1,secondColon-firstColon);
         string northStr = fieldArray[i].substr(secondColon+1,thirdColon-secondColon);
         string southStr = fieldArray[i].substr(thirdColon+1);
 
+        int fieldNumber = atoi(fieldStr.c_str());
         int north = atoi(northStr.c_str());
         int south = atoi(southStr.c_str());
         int east = atoi(eastStr.c_str());
         int west= atoi(westStr.c_str());
 
-        //        cout << fieldArray[i] << endl;
-        //        cout << "\t" << fieldNumber << ": W= " << west << endl;
-        //        cout << "\t" << fieldNumber << ": O= " << east << endl;
-        //        cout << "\t" << fieldNumber << ": N= " << north << endl;
-        //        cout << "\t" << fieldNumber << ": S= " << south << endl << endl;
+
+
+        qDebug() << "------------------------------------";
+        qDebug() << "\t" << fieldNumber << ": W= " << west;
+        qDebug() << "\t" << fieldNumber << ": O= " << east;
+        qDebug() << "\t" << fieldNumber << ": N= " << north;
+        qDebug() << "\t" << fieldNumber << ": S= " << south;
+
 
         //************************************************************************************************
         //LINK THE LIST
@@ -139,7 +144,7 @@ GameBoard *FileParser::createBoard(const char* file)
         //cout << "iterator 1 at the field " << iterator.getCurrentNumber() << endl;
 
         // Set south field
-        if(south != 0){
+        if(south >= 0){
             // go with the second iterator to the south fiel
             iteratorSearch2.resetToFirst();
             while(iteratorSearch2.getCurrentNumber() != south){
@@ -150,7 +155,7 @@ GameBoard *FileParser::createBoard(const char* file)
 
         }
         // Set north field
-        if(north != 0){
+        if(north >= 0){
             // go with the second iterator to the north fiel
             iteratorSearch2.resetToFirst();
             while(iteratorSearch2.getCurrentNumber() != north){
@@ -162,7 +167,7 @@ GameBoard *FileParser::createBoard(const char* file)
         }
 
         // Set east field of the current field
-        if(east != 0){
+        if(east >= 0){
             // go with the second iterator to the east fiel
             iteratorSearch2.resetToFirst();
             while(iteratorSearch2.getCurrentNumber() != east){
@@ -173,7 +178,7 @@ GameBoard *FileParser::createBoard(const char* file)
 
         }
         // Set west field
-        if(west != 0){
+        if(west >= 0){
             // go with the second iterator to the east fiel
             iteratorSearch2.resetToFirst();
             while(iteratorSearch2.getCurrentNumber() != west){

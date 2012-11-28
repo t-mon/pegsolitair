@@ -52,8 +52,7 @@ HEADERS += \
     gameengine.h \
     searchalgorithm.h
 
-OTHER_FILES += \
-    european.txt
+OTHER_FILES +=
 
 RESOURCES += \
     resources.qrc

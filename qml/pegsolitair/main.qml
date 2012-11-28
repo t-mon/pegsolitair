@@ -13,7 +13,7 @@ Rectangle {
 
         Column{
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top - 30
+            anchors.top: parent.top
             spacing: 10
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
