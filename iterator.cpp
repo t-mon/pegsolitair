@@ -1,5 +1,7 @@
 #include "iterator.h"
 
+#include <QDebug>
+
 Iterator::Iterator(GameBoard *gameBoard, QObject *parent) :
     m_gameBoard(gameBoard), QObject(parent)
 {

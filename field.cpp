@@ -1,5 +1,6 @@
 #include "field.h"
 
+#include <QDebug>
 using namespace std;
 
 Field::Field(bool occupied, int number, Field* next, Field* previous, Field* north, Field* south, Field* east, Field* west, QObject *parent) :

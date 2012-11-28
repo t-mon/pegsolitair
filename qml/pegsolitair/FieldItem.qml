@@ -18,9 +18,4 @@ Item {
             text: fieldNumber
         }
     }
-    Component.onCompleted: {
-        print("************** engine", engine)
-        print("************** engine.board", engine.board)
-        print("************** engine.board.fieldAt", engine.board.fieldCount())
-    }
 }
