@@ -54,3 +54,7 @@ HEADERS += \
 
 OTHER_FILES += \
     european.txt
+
+RESOURCES += \
+    resources.qrc
+

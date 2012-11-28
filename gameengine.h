@@ -12,6 +12,7 @@ class GameEngine : public QObject
 public:
     explicit GameEngine(QObject *parent = 0);
 
+    Q_INVOKABLE GameBoard *board();
 private:
     GameBoard *m_gameBoard;
 

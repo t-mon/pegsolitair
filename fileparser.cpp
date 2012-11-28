@@ -46,7 +46,7 @@ GameBoard *FileParser::createBoard(const char* file)
     }
 
     // create empty board depending on the amount of fields in the file
-    GameBoard *m_gameBoard = new GameBoard();
+    GameBoard *m_gameBoard = new GameBoard(fields);
 
     Iterator gameIterator(m_gameBoard);
     gameIterator.resetToFirst();

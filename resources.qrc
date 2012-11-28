@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>european.txt</file>
+    </qresource>
+</RCC>

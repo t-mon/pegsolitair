@@ -21,7 +21,7 @@ Rectangle {
                 Repeater{
                     model: 3
                     FieldItem{
-                        fieldNumber: index + 1
+                        fieldNumber: index
                     }
                 }
             }
@@ -31,7 +31,7 @@ Rectangle {
                 Repeater{
                     model: 5
                     FieldItem{
-                        fieldNumber: index + 4
+                        fieldNumber: index + 3
                     }
                 }
             }
@@ -41,7 +41,7 @@ Rectangle {
                 Repeater{
                     model: 7
                     FieldItem{
-                        fieldNumber: index + 9
+                        fieldNumber: index + 8
                     }
                 }
             }
@@ -51,7 +51,7 @@ Rectangle {
                 Repeater{
                     model: 7
                     FieldItem{
-                        fieldNumber: index + 16
+                        fieldNumber: index + 15
                     }
                 }
             }
@@ -61,7 +61,7 @@ Rectangle {
                 Repeater{
                     model: 7
                     FieldItem{
-                        fieldNumber: index + 23
+                        fieldNumber: index + 22
                     }
                 }
             }
@@ -71,7 +71,7 @@ Rectangle {
                 Repeater{
                     model: 5
                     FieldItem{
-                        fieldNumber: index + 30
+                        fieldNumber: index + 29
                     }
                 }
             }
@@ -81,7 +81,7 @@ Rectangle {
                 Repeater{
                     model: 3
                     FieldItem{
-                        fieldNumber: index + 35
+                        fieldNumber: index + 34
                     }
                 }
             }

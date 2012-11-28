@@ -11,8 +11,10 @@ class GameBoard : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(int fieldCount READ fieldCount)
+
 public:
-    explicit GameBoard(QObject *parent = 0);
+    explicit GameBoard(int fieldCount, QObject *parent = 0);
 
     Field* getFirstField();
     Field* getLastField();
@@ -22,11 +24,14 @@ public:
     bool isEmpty();         // returns true if the board is emtpty
 
 
+    Q_INVOKABLE int fieldCount();
+    Q_INVOKABLE Field* fieldAt(int index);
+
 private:
 
     Field* m_first;       // the first field in the board (1)
     Field* m_last;        // the last field in the board  (121)
-
+    int m_fieldCount;
 
 
 signals:

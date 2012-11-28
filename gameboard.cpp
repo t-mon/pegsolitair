@@ -2,11 +2,12 @@
 #include "iterator.h"
 #include <QDebug>
 
-GameBoard::GameBoard(QObject *parent) :
-    QObject(parent)
+GameBoard::GameBoard(int fieldCount, QObject *parent) :
+    QObject(parent),
+    m_first(0),
+    m_last(0),
+    m_fieldCount(fieldCount)
 {
-    m_first = 0;
-    m_last = 0;
 }
 
 Field *GameBoard::getFirstField()
@@ -34,6 +35,25 @@ bool GameBoard::isEmpty()
 {
     // returns true if there is no Field in the board
     return (m_first == 0);
+}
+
+int GameBoard::fieldCount()
+{
+    return m_fieldCount;
+}
+
+Field *GameBoard::fieldAt(int index)
+{
+    qDebug() << "index:" << index << "count:" << m_fieldCount;
+    Q_ASSERT(index < m_fieldCount);
+
+    Iterator it(this);
+    it.resetToFirst();
+    while (it.getCurrentNumber() != 5) {
+        ++it;
+    }
+
+    return it.getCurrentField();
 }
 
 
