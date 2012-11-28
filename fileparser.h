@@ -13,7 +13,7 @@ public:
     //void parse();               // pharse from the given file the connections between the boardfields
 
 private:
-    //GameBoard *m_board;
+    GameBoard *m_gameBoard;
     GameBoard createBoard(const char *file);
     void createEmtyBoard(int fields);     // create a empty board (a list of fields with N,S,E,W = 0, just previouse and next gets created)
     void printFieldConnections();
