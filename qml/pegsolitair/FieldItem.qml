@@ -11,7 +11,7 @@ Item {
         anchors.fill: parent
         radius: 10
         border.color: "black"
-        color: board.fieldAt(fieldNumber).color
+        color: board.fieldAt(fieldNumber).occupied ? "red" : "green"
         Text {
             anchors.centerIn: parent
             id: fieldText

@@ -11,7 +11,8 @@ class Field : public QObject
     Q_OBJECT
     friend class Iterator;
 
-    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
+    Q_PROPERTY(bool occupied READ occupied NOTIFY occupiedChanged)
+
 public:
     explicit Field(bool occupied = false, int number = 0, Field* next = 0, Field* previous = 0, Field* north = 0, Field* south= 0, Field* east = 0, Field* west = 0, QObject *parent = 0);
     int getFieldNumber();
@@ -23,17 +24,15 @@ public:
     Field* getNextField();
     Field* getPreviousField();
 
-    QColor color();
-    void setColor(const QColor &color);
+    bool occupied() const;
 
 signals:
-    void colorChanged();
+    void occupiedChanged();
 
 private:
     // data from this field
     bool m_occupied;          // true = occupied, flase = free
     int m_number;             // the fieldnumber
-    QColor m_color;
 
     // generate pointer
     Field *m_next;            // go to the next field (fieldnumber+1), this is just to move once the hole board forward
