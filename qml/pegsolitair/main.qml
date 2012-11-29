@@ -3,88 +3,20 @@ import QtQuick 1.1
 
 Rectangle {
     id: window
-    width: 750
+    width: 900
     height: 750
-    Rectangle{
-        id: gameBoard
-        width: window.width -40
-        height: window.height -40
-        anchors.centerIn: parent
 
-        Column{
-            anchors.horizontalCenter: parent.horizontalCenter
+    Column{
+        anchors.fill: parent
+        EuropeanBoardItem{
             anchors.top: parent.top
-            spacing: 15
-            Row{
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 15
-                Repeater{
-                    model: 3
-                    FieldItem{
-                        fieldNumber: index
-                    }
-                }
-            }
-            Row{
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 15
-                Repeater{
-                    model: 5
-                    FieldItem{
-                        fieldNumber: index + 3
-                    }
-                }
-            }
-            Row{
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 15
-                Repeater{
-                    model: 7
-                    FieldItem{
-                        fieldNumber: index + 8
-                    }
-                }
-            }
-            Row{
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 15
-                Repeater{
-                    model: 7
-                    FieldItem{
-                        fieldNumber: index + 15
-                    }
-                }
-            }
-            Row{
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 15
-                Repeater{
-                    model: 7
-                    FieldItem{
-                        fieldNumber: index + 22
-                    }
-                }
-            }
-            Row{
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 15
-                Repeater{
-                    model: 5
-                    FieldItem{
-                        fieldNumber: index + 29
-                    }
-                }
-            }
-            Row{
-                anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 15
-                Repeater{
-                    model: 3
-                    FieldItem{
-                        fieldNumber: index + 34
-                    }
-                }
-            }
+            anchors.left: parent.left
+            anchors.right: parent.right
         }
+//        Text{
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.baseline: parent.baseline
+//            text: "This is the european board of the game Peg Solitair \nclick with the right button on a field"
+//        }
     }
 }

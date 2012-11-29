@@ -25,6 +25,8 @@ private:
 
     int m_markedFieldNumber;
 
+    QString m_gameHistory;
+
 signals:
     
 public slots:
