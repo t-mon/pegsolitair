@@ -7,6 +7,7 @@ Field::Field(bool occupied, int number, Field* next, Field* previous, Field* nor
     m_occupied(occupied), m_number(number), m_next(next), m_previous(previous), m_north(north), m_south(south), m_east(east), m_west(west), QObject(parent)
 {
     m_marked = false;
+    m_possibleToMove = false;
 }
 
 int Field::getFieldNumber()
@@ -49,9 +50,14 @@ bool Field::occupied() const
     return m_occupied;
 }
 
-bool Field::markField() const
+bool Field::marked() const
 {
     return m_marked;
+}
+
+bool Field::possibleToMove() const
+{
+    return m_possibleToMove;
 }
 
 void Field::setOccupied(bool occupied)
@@ -63,6 +69,12 @@ void Field::setOccupied(bool occupied)
 void Field::setMarked(bool marked)
 {
     m_marked = marked;
-    emit markFieldChanged();
+    emit markedChanged();
+}
+
+void Field::setpossibleToMove(bool possibleMove)
+{
+    m_possibleToMove = possibleMove;
+    emit possibleToMoveChanged();
 }
 

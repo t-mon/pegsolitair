@@ -12,7 +12,8 @@ class Field : public QObject
     friend class Iterator;
 
     Q_PROPERTY(bool occupied READ occupied NOTIFY occupiedChanged)
-    Q_PROPERTY(bool markField READ markField NOTIFY markFieldChanged)
+    Q_PROPERTY(bool marked READ marked NOTIFY markedChanged)
+    Q_PROPERTY(bool possibleToMove READ possibleToMove NOTIFY possibleToMoveChanged)
 
 
 public:
@@ -27,20 +28,23 @@ public:
     Field* getPreviousField();
 
     bool occupied() const;
-    bool markField() const;
+    bool marked() const;
+    bool possibleToMove() const;
 
     void setOccupied(bool occupied);
     void setMarked(bool marked);
+    void setpossibleToMove(bool possibleMove);
 
 signals:
     void occupiedChanged();
-    void markFieldChanged();
-
+    void markedChanged();
+    void possibleToMoveChanged();
 private:
     // data from this field
     bool m_occupied;          // true = occupied, flase = free
     bool m_marked;
-    int m_number;             // the fieldnumber
+    bool m_possibleToMove;
+    int  m_number;             // the fieldnumber
 
     // generate pointer
     Field *m_next;            // go to the next field (fieldnumber+1), this is just to move once the hole board forward

@@ -15,13 +15,15 @@ public:
     Q_INVOKABLE GameBoard *board();
 private:
     GameBoard *m_gameBoard;
-    bool canJumpNorth;
-    bool canJumpSouth;
-    bool canJumpEast;
-    bool canJumpWest;
 
     bool getJumpPossibilitys(int fieldNumber);
+    void resetFieldMarker();
+    bool somethingMarked();
+    bool isPossibleToMove(int fieldNumber);
+    bool isMarked(int fieldNumber);
+    void jump(int fieldNumber);
 
+    int m_markedFieldNumber;
 
 signals:
     

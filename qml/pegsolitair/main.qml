@@ -3,8 +3,8 @@ import QtQuick 1.1
 
 Rectangle {
     id: window
-    width: 700
-    height: 700
+    width: 750
+    height: 750
     Rectangle{
         id: gameBoard
         width: window.width -40
@@ -14,10 +14,10 @@ Rectangle {
         Column{
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
-            spacing: 10
+            spacing: 15
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+                spacing: 15
                 Repeater{
                     model: 3
                     FieldItem{
@@ -27,7 +27,7 @@ Rectangle {
             }
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+                spacing: 15
                 Repeater{
                     model: 5
                     FieldItem{
@@ -37,7 +37,7 @@ Rectangle {
             }
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+                spacing: 15
                 Repeater{
                     model: 7
                     FieldItem{
@@ -47,7 +47,7 @@ Rectangle {
             }
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+                spacing: 15
                 Repeater{
                     model: 7
                     FieldItem{
@@ -57,7 +57,7 @@ Rectangle {
             }
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+                spacing: 15
                 Repeater{
                     model: 7
                     FieldItem{
@@ -67,7 +67,7 @@ Rectangle {
             }
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+                spacing: 15
                 Repeater{
                     model: 5
                     FieldItem{
@@ -77,7 +77,7 @@ Rectangle {
             }
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 10
+                spacing: 15
                 Repeater{
                     model: 3
                     FieldItem{

@@ -53,7 +53,7 @@ GameBoard *FileParser::createBoard(const char* file)
     gameIterator.resetToFirst();
 
     for(int i = 0; i < fields; i++){
-        gameIterator.insert((i % 2) == 0 ? false : true,i,0,0,0,0,0,0,0);
+        gameIterator.insert(i == 0 ? false : true,i,0,0,0,0,0,0,0);
         ++gameIterator;
     }
 

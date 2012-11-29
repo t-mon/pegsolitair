@@ -5,23 +5,31 @@ import pegsolitaire 1.0
 Item {
     id: fieldItem
     property int fieldNumber
-    width: 80
-    height: 80
+    width: 90
+    height: 90
     Rectangle{
         anchors.fill: parent
-        radius: 15
-        border.color: board.fieldAt(fieldNumber).markField ? "blue" : "black"
+        radius: 45
+        border.color: board.fieldAt(fieldNumber).possibleToMove ? "green" : "transparent"
         border.width: 5
-        //border.color: "black"
-        color: board.fieldAt(fieldNumber).occupied ? "green" : "white"
-        Text {
+        color: "transparent"
+        Rectangle{
             anchors.centerIn: parent
-            id: fieldText
-            text: fieldNumber
-        }
-        MouseArea{
-            anchors.fill: parent
-            onClicked: engine.fieldClicked(fieldNumber)
+            width: parent.width-10
+            height: parent.height-10
+            radius: 40
+            border.color: board.fieldAt(fieldNumber).marked ? "red" : "black"
+            border.width: 5
+            color: board.fieldAt(fieldNumber).occupied ? "steelblue" : "white"
+            Text {
+                anchors.centerIn: parent
+                id: fieldText
+                text: fieldNumber
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: engine.fieldClicked(fieldNumber)
+            }
         }
     }
 }
