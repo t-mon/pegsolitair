@@ -28,7 +28,16 @@ Item {
             }
             MouseArea{
                 anchors.fill: parent
-                onClicked: engine.fieldClicked(fieldNumber)
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                onClicked: {
+                    if (mouse.button === Qt.LeftButton)
+                        engine.fieldClicked(fieldNumber)
+                    if(mouse.button === Qt.RightButton)
+                        engine.rightClicked(fieldNumber)
+                }
+
+                //onClicked: engine.fieldClicked(fieldNumber)
+
             }
         }
     }

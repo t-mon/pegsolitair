@@ -43,7 +43,7 @@ bool GameEngine::getJumpPossibilitys(int fieldNumber)
         canJumpNorth = true;
         it.getCurrentField()->setMarked(true);
         it.getNorthField()->getNorthField()->setpossibleToMove(true);
-        qDebug() << "-----> can jump north direction";
+        qDebug() << "can jump north direction";
 
     }else{
         canJumpNorth = false;
@@ -55,7 +55,7 @@ bool GameEngine::getJumpPossibilitys(int fieldNumber)
         canJumpSouth = true;
         it.getCurrentField()->setMarked(true);
         it.getSouthField()->getSouthField()->setpossibleToMove(true);
-        qDebug() << "-----> can jump south direction";
+        qDebug() << "can jump south direction";
 
     }else{
         canJumpSouth = false;
@@ -67,7 +67,7 @@ bool GameEngine::getJumpPossibilitys(int fieldNumber)
         canJumpEast = true;
         it.getCurrentField()->setMarked(true);
         it.getEastField()->getEastField()->setpossibleToMove(true);
-        qDebug() << "-----> can jump east direction";
+        qDebug() << "can jump east direction";
 
     }else{
         canJumpEast = false;
@@ -79,15 +79,16 @@ bool GameEngine::getJumpPossibilitys(int fieldNumber)
         canJumpWest = true;
         it.getCurrentField()->setMarked(true);
         it.getWestField()->getWestField()->setpossibleToMove(true);
-        qDebug() << "-----> can jump west direction";
+        qDebug() << "can jump west direction";
     }else{
         canJumpWest = false;
     }
 
     if(canJumpNorth || canJumpSouth || canJumpEast || canJumpWest){
+        qDebug() << "field" << fieldNumber << "marked";
         return true;
     }else{
-        qDebug() << "---------------no jump possibilitys for field" << fieldNumber;
+        qDebug() << "no jump possibilitys for field" << fieldNumber;
         return false;
     }
 }
@@ -102,6 +103,9 @@ void GameEngine::resetFieldMarker()
         it.getCurrentField()->setpossibleToMove(false);
         ++it;
     }
+    it.getCurrentField()->setMarked(false);
+    it.getCurrentField()->setpossibleToMove(false);
+    m_markedFieldNumber = -1;
 }
 
 bool GameEngine::somethingMarked()
@@ -116,6 +120,11 @@ bool GameEngine::somethingMarked()
             return true;
         }
         ++it;
+    }
+    if(it.getCurrentField()->marked() == true){
+        m_markedFieldNumber = it.getCurrentNumber();
+        return true;
+
     }
     return false;
 }
@@ -142,7 +151,6 @@ bool GameEngine::isMarked(int fieldNumber)
     it.resetToFirst();
 
     while(it.getCurrentNumber() != fieldNumber){
-
         ++it;
     }
     if(it.getCurrentField()->marked()){
@@ -165,7 +173,6 @@ void GameEngine::jump(int fieldNumber)
     // make the field where i jumped to occupied
     Iterator itPossible(m_gameBoard);
     itPossible.resetToFirst();
-    itPossible.resetToFirst();
     while(itPossible.getCurrentNumber() != fieldNumber){
         ++itPossible;
     }
@@ -178,7 +185,7 @@ void GameEngine::jump(int fieldNumber)
             if(itMarked.getNorthField()->getNorthField() == itPossible.getCurrentField()){
                 itMarked.goNorth();
                 itMarked.getCurrentField()->setOccupied(false);
-                qDebug() << "-----> jumped north";
+                qDebug() << "jumped north";
             }
         }
     }
@@ -189,7 +196,7 @@ void GameEngine::jump(int fieldNumber)
             if(itMarked.getSouthField()->getSouthField() == itPossible.getCurrentField()){
                 itMarked.goSouth();
                 itMarked.getCurrentField()->setOccupied(false);
-                qDebug() << "-----> jumped south";
+                qDebug() << "jumped south";
 
             }
         }
@@ -200,7 +207,7 @@ void GameEngine::jump(int fieldNumber)
             if(itMarked.getEastField()->getEastField() == itPossible.getCurrentField()){
                 itMarked.goEast();
                 itMarked.getCurrentField()->setOccupied(false);
-                qDebug() << "-----> jumped east";
+                qDebug() << "jumped east";
 
             }
         }
@@ -212,7 +219,7 @@ void GameEngine::jump(int fieldNumber)
             if(itMarked.getWestField()->getWestField() == itPossible.getCurrentField()){
                 itMarked.goWest();
                 itMarked.getCurrentField()->setOccupied(false);
-                qDebug() << "-----> jumped west";
+                qDebug() << "jumped west";
 
             }
         }
@@ -231,27 +238,38 @@ void GameEngine::fieldClicked(int fieldNumber)
     switch(somethingMarked()){
     // nothing marked
     case false:
-        qDebug() << "---------------nothing marked, check jumppossibilitys";
+        qDebug() << "nothing marked, check jumppossibilitys";
         getJumpPossibilitys(fieldNumber);
         break;
 
         // something is marked
     case true:
-        qDebug() << "---------------marked field =" << m_markedFieldNumber;
+        qDebug() << "marked field =" << m_markedFieldNumber;
         // if i have clicked on a not possible move make the move
         if(!isPossibleToMove(fieldNumber)){
-            //qDebug() << "---------------something marked but not clicked on a possibility to jump";
-
+            //qDebug() << "something marked but not clicked on a possibility to jump";
             resetFieldMarker();
             break;
             // else i have clicked on a possible Field to make the move
         }else{
-            qDebug() << "---------------JUMP from " << m_markedFieldNumber << "->" << fieldNumber;
+            qDebug() << "---------> JUMP from " << m_markedFieldNumber << "->" << fieldNumber << " <---------";
             jump(fieldNumber);
             resetFieldMarker();
             break;
         }
     }
+
+}
+
+void GameEngine::rightClicked(int fieldNumber)
+{
+    Iterator it(m_gameBoard);
+    it.resetToFirst();
+    while(it.getCurrentNumber() != fieldNumber){
+        ++it;
+    }
+    qDebug() << "~~~~~~~~~~~~~~~~occupacy from field" << fieldNumber << "changed by User from" << it.getCurrentField()->occupied() << "to" << !it.getCurrentField()->occupied();
+    it.getCurrentField()->setOccupied(!it.getCurrentField()->occupied());
 
 }
 

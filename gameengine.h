@@ -29,6 +29,7 @@ signals:
     
 public slots:
     void fieldClicked(int fieldNumber);
+    void rightClicked(int fieldNumber);
     
 };
 
