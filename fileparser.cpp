@@ -207,6 +207,17 @@ FileParser::FileParser()
 
 GameBoard *FileParser::createBoard(const char* file)
 {
+    QString fileName(QLatin1String(file));
+    QFile qfile(":/european.txt");
+
+    if(!qfile.open(QIODevice::ReadOnly)) {
+        qDebug() << "cannot open file";
+    }
+
+    qDebug() << qfile.readAll();
+
+
+
     qDebug() <<  "parese file " << file;
     int fields = 0;             // number of the field
     string fieldArray[257];     // array of lines from the file
