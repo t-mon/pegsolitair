@@ -33,6 +33,7 @@ private:
     bool winnState() const;
 
     void appendToHistory(QString moveString);
+    void appendToSafeHistory(QString moveString);
     void resetHistory();
     void checkWinnState();
 
@@ -48,6 +49,7 @@ private:
     int m_markedFieldNumber;
     int m_movesLeft;
     QString m_gameHistory;
+    QString m_safeHistoryString;
     bool m_stillCanWinn;
     bool m_winnState;
 
@@ -63,6 +65,7 @@ public slots:
     void fieldClicked(int fieldNumber);
     void rightClicked(int fieldNumber);
     void newGameClicked(QString boardType);
+    void safeHistory();
 };
 
 #endif // GAMEENGINE_H

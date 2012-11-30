@@ -23,8 +23,8 @@ Rectangle {
             anchors.fill: parent
             text: engine.history;
         }
-
     }
+
 
     EnglishBoardItem{}
 
@@ -51,13 +51,19 @@ Rectangle {
             id: newGameButton
             anchors { left: parent.left; verticalCenter: parent.verticalCenter }
             text: "New game with european board"
-            onClicked: engine.newGameClicked(":/european.txt");
+            //onClicked: engine.newGameClicked(":/european.txt");
         }
 
         Button {
             anchors { left: newGameButton.right; verticalCenter: parent.verticalCenter }
             text: "New game with english board"
             onClicked: engine.newGameClicked(":/english.txt")
+        }
+
+        Button {
+            anchors { right: score.left; verticalCenter: parent.verticalCenter }
+            text: "Safe History"
+            onClicked: engine.safeHistory();
         }
 
         Text {

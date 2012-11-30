@@ -1,5 +1,6 @@
 #include "gameengine.h"
 #include <QDebug>
+#include <QDateTime>
 
 GameEngine::GameEngine(QObject *parent) :
     QObject(parent)
@@ -354,6 +355,11 @@ void GameEngine::appendToHistory(QString moveString)
     emit historyChanged();
 }
 
+void GameEngine::appendToSafeHistory(QString moveString)
+{
+    m_safeHistoryString.append(moveString);
+}
+
 void GameEngine::resetHistory()
 {
     m_gameHistory = "";
@@ -428,6 +434,7 @@ void GameEngine::fieldClicked(int fieldNumber)
         }else{
             qDebug() << "---------> JUMP from " << m_markedFieldNumber << "->" << fieldNumber;
             appendToHistory(QString::number(m_markedFieldNumber) + "->" + QString::number(fieldNumber) +"\n");
+            appendToSafeHistory(QString::number(m_markedFieldNumber) + "->" + QString::number(fieldNumber) + ", ");
             jump(fieldNumber);
             resetFieldMarker();
             checkWinnState();
@@ -449,6 +456,7 @@ void GameEngine::rightClicked(int fieldNumber)
     qDebug() << "~~~~~~~~~~occupacy from field" << fieldNumber << "changed by User from" << it.getCurrentField()->occupied() << "to" << !it.getCurrentField()->occupied();
     it.getCurrentField()->setOccupied(!it.getCurrentField()->occupied());
     appendToHistory(QString::number(fieldNumber) + "->" + "!\n");
+    appendToSafeHistory(QString::number(fieldNumber) + "->" + "! , ");
     checkWinnState();
 }
 
@@ -472,6 +480,26 @@ void GameEngine::newGameClicked(QString boardType)
         m_gameBoard = parser.createBoard(boardType);
 
     }
+
+}
+
+void GameEngine::safeHistory()
+{
+
+    QFile safeGame("/home/timon/PegSolitair_PlayedGames.txt");
+    if(!safeGame.open(QIODevice::Append |QIODevice::WriteOnly | QIODevice::Text)){
+        qDebug() << "could not open history file";
+    }
+
+    QDataStream *output = new QDataStream(&safeGame);
+    QString safeString = QDateTime::currentDateTime().toString("ddd dd.MM.yyyy hh:mm:ss").toLatin1() +"\n" + m_safeHistoryString.toLatin1() +"\n\n";
+    *output << safeString.toLatin1();
+
+    qDebug() << safeString;
+
+    safeGame.close();
+    delete output;
+    m_safeHistoryString = "";
 
 }
 
