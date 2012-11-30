@@ -492,7 +492,7 @@ void GameEngine::safeHistory()
     }
 
     QDataStream *output = new QDataStream(&safeGame);
-    QString safeString = QDateTime::currentDateTime().toString("ddd dd.MM.yyyy hh:mm:ss").toLatin1() +"\n" + m_safeHistoryString.toLatin1() +"\n\n";
+    QString safeString = QDateTime::currentDateTime().toString("ddd dd.MM.yyyy hh:mm:ss").toLatin1() + "  boardtype" + m_boardType +"\n" + m_safeHistoryString.toLatin1() +"\n\n";
     *output << safeString.toLatin1();
 
     qDebug() << safeString;
