@@ -12,6 +12,7 @@ class GameEngine : public QObject
     Q_PROPERTY(QString history READ history NOTIFY historyChanged)
     Q_PROPERTY(int movesLeft READ movesLeft() NOTIFY movesLeftChanged)
     Q_PROPERTY(bool stillCanWinn READ stillCanWinn() NOTIFY stillCanWinnChanged)
+    Q_PROPERTY(bool winnState READ winnState() NOTIFY winnStateChanged)
 
 
 public:
@@ -25,8 +26,11 @@ private:
     QString history() const;
     int movesLeft() const;
     bool stillCanWinn() const;
+    bool winnState() const;
 
     void appendToHistory(QString moveString);
+    void resetHistory();
+    void checkWinnState();
 
     bool getJumpPossibilitys(int fieldNumber);
     bool getJumpPossibilitysWithoutMarking(int fieldNumber);
@@ -35,17 +39,20 @@ private:
     bool isPossibleToMove(int fieldNumber);
     bool isMarked(int fieldNumber);
     void jump(int fieldNumber);
-    void checkMovesLeft();
+    int checkMovesLeft();
 
     int m_markedFieldNumber;
     int m_movesLeft;
     QString m_gameHistory;
     bool m_stillCanWinn;
+    bool m_winnState;
+
 
 signals:
     void historyChanged();
     void movesLeftChanged();
     void stillCanWinnChanged();
+    void winnStateChanged();
     
 public slots:
     void fieldClicked(int fieldNumber);

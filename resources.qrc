@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>european.txt</file>
+        <file>english.txt</file>
     </qresource>
 </RCC>

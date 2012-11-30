@@ -4,11 +4,11 @@
 GameEngine::GameEngine(QObject *parent) :
     QObject(parent)
 {
+    m_stillCanWinn = true;
     FileParser parser;
-    m_gameBoard = parser.createBoard(":/european.txt");
+    m_gameBoard = parser.createBoard(":/english.txt");
     // now the empty linked Board is created
     m_markedFieldNumber = -1;
-    m_stillCanWinn = true;
 }
 
 GameBoard *GameEngine::board()
@@ -291,7 +291,7 @@ void GameEngine::jump(int fieldNumber)
 
 }
 
-void GameEngine::checkMovesLeft()
+int GameEngine::checkMovesLeft()
 {
     int jumpPossibilitys = 0;
     Iterator it(m_gameBoard);
@@ -315,13 +315,9 @@ void GameEngine::checkMovesLeft()
         }
     }
 
-    if(jumpPossibilitys == 0){
-        m_stillCanWinn = false;
-        emit stillCanWinnChanged();
-    }
-
     m_movesLeft = jumpPossibilitys;
     emit movesLeftChanged();
+    return jumpPossibilitys;
 }
 
 QString GameEngine::history() const
@@ -339,10 +335,60 @@ bool GameEngine::stillCanWinn() const
     return m_stillCanWinn;
 }
 
+bool GameEngine::winnState() const
+{
+    return m_winnState;
+}
+
 void GameEngine::appendToHistory(QString moveString)
 {
     m_gameHistory.append(moveString);
     emit historyChanged();
+}
+
+void GameEngine::resetHistory()
+{
+    m_gameHistory = "";
+    emit historyChanged();
+}
+
+void GameEngine::checkWinnState()
+{
+    //
+    int countOccupied = 0;
+    Iterator it(m_gameBoard);
+    it.resetToFirst();
+
+    while(it.getCurrentField()->getFieldNumber() != m_gameBoard->getLastField()->getFieldNumber()){
+
+        // if field occupied
+        if(it.getCurrentField()->occupied()){
+            countOccupied++;
+        }
+        ++it;
+    }
+    if(it.getCurrentField()->occupied()){
+        countOccupied++;
+    }
+
+    // if every field is occupied
+    if(countOccupied == m_gameBoard->getLastField()->getFieldNumber()+1){
+        return;
+    }
+
+    if (countOccupied == 1){
+        m_winnState = true;
+        emit winnStateChanged();
+    }
+
+
+    if(checkMovesLeft()== 0 && countOccupied >1){
+        m_winnState = false;
+        emit winnStateChanged();
+        m_stillCanWinn = false;
+        emit stillCanWinnChanged();
+    }
+
 }
 
 
@@ -350,7 +396,7 @@ void GameEngine::fieldClicked(int fieldNumber)
 {
     qDebug() << "###################################################";
     qDebug() << "Field Number " << fieldNumber << "clicked";
-    checkMovesLeft();
+    checkWinnState();
 
     // check if something is marked
     switch(somethingMarked()){
@@ -358,7 +404,7 @@ void GameEngine::fieldClicked(int fieldNumber)
     case false:
         qDebug() << "nothing marked, check jumppossibilitys";
         getJumpPossibilitys(fieldNumber);
-        checkMovesLeft();
+        checkWinnState();
         break;
 
         // something is marked
@@ -368,7 +414,7 @@ void GameEngine::fieldClicked(int fieldNumber)
         if(!isPossibleToMove(fieldNumber)){
             //qDebug() << "something marked but not clicked on a possibility to jump";
             resetFieldMarker();
-            checkMovesLeft();
+            checkWinnState();
             break;
             // else i have clicked on a possible Field to make the move
         }else{
@@ -376,10 +422,12 @@ void GameEngine::fieldClicked(int fieldNumber)
             appendToHistory(QString::number(m_markedFieldNumber) + "->" + QString::number(fieldNumber) +"\n");
             jump(fieldNumber);
             resetFieldMarker();
-            checkMovesLeft();
+            checkWinnState();
             break;
         }
     }
+    checkWinnState();
+
 
 }
 
@@ -393,7 +441,7 @@ void GameEngine::rightClicked(int fieldNumber)
     qDebug() << "~~~~~~~~~~occupacy from field" << fieldNumber << "changed by User from" << it.getCurrentField()->occupied() << "to" << !it.getCurrentField()->occupied();
     it.getCurrentField()->setOccupied(!it.getCurrentField()->occupied());
     appendToHistory(QString::number(fieldNumber) + "->" + "!\n");
-    checkMovesLeft();
+    checkWinnState();
 }
 
 void GameEngine::newGameClicked()
@@ -405,8 +453,7 @@ void GameEngine::newGameClicked()
         ++it;
     }
     it.getCurrentField()->setOccupied(true);
-    m_gameHistory = "";
-    emit historyChanged();
+    resetHistory();
     m_stillCanWinn = true;
     emit stillCanWinnChanged();
 
