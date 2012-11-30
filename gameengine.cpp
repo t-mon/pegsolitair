@@ -8,6 +8,7 @@ GameEngine::GameEngine(QObject *parent) :
     m_gameBoard = parser.createBoard(":/european.txt");
     // now the empty linked Board is created
     m_markedFieldNumber = -1;
+    m_stillCanWinn = true;
 }
 
 GameBoard *GameEngine::board()
@@ -89,6 +90,69 @@ bool GameEngine::getJumpPossibilitys(int fieldNumber)
         return true;
     }else{
         qDebug() << "no jump possibilitys for field" << fieldNumber;
+        return false;
+    }
+}
+
+bool GameEngine::getJumpPossibilitysWithoutMarking(int fieldNumber)
+{
+
+    bool canJumpNorth;
+    bool canJumpSouth;
+    bool canJumpEast;
+    bool canJumpWest;
+
+    // controll if jumping is possible
+    Iterator it(m_gameBoard);
+    it.resetToFirst();
+    while(it.getCurrentNumber() != fieldNumber){
+        ++it;
+    }
+
+    // if its not occupied dont mark it
+    if(!it.getCurrentField()->occupied()){
+        return false;
+    }
+
+    //controll every direction
+
+    // controll NORTH direction
+    // if firectionfield exists  and   is occupied                  and   the field after that exist              and  is not occupied
+    if((it.getNorthField() != 0) && (it.getNorthField()->occupied()) && (it.getNorthField()->getNorthField() != 0) && (!it.getNorthField()->getNorthField()->occupied())){
+        canJumpNorth = true;
+
+
+    }else{
+        canJumpNorth = false;
+    }
+
+    // controll South direction
+    // if firectionfield exists  and   is occupied                  and   the field after that exist              and  is not occupied
+    if((it.getSouthField() != 0) && (it.getSouthField()->occupied()) && (it.getSouthField()->getSouthField() != 0) && (!it.getSouthField()->getSouthField()->occupied())){
+        canJumpSouth = true;
+    }else{
+        canJumpSouth = false;
+    }
+
+    // controll East direction
+    // if firectionfield exists  and   is occupied                  and   the field after that exist              and  is not occupied
+    if((it.getEastField() != 0) && (it.getEastField()->occupied()) && (it.getEastField()->getEastField() != 0) && (!it.getEastField()->getEastField()->occupied())){
+        canJumpEast = true;
+    }else{
+        canJumpEast = false;
+    }
+
+    // controll West direction
+    // if firectionfield exists  and   is occupied                  and   the field after that exist              and  is not occupied
+    if((it.getWestField() != 0) && (it.getWestField()->occupied()) && (it.getWestField()->getWestField() != 0) && (!it.getWestField()->getWestField()->occupied())){
+        canJumpWest = true;
+    }else{
+        canJumpWest = false;
+    }
+
+    if(canJumpNorth || canJumpSouth || canJumpEast || canJumpWest){
+        return true;
+    }else{
         return false;
     }
 }
@@ -227,12 +291,66 @@ void GameEngine::jump(int fieldNumber)
 
 }
 
+void GameEngine::checkMovesLeft()
+{
+    int jumpPossibilitys = 0;
+    Iterator it(m_gameBoard);
+    it.resetToFirst();
+
+    while(it.getCurrentField()->getFieldNumber() != m_gameBoard->getLastField()->getFieldNumber()){
+
+        // if field occupied
+        if(it.getCurrentField()->occupied()){
+            // if getJumpPossibilitys returns true, ++jumpPossibilitys
+            if(getJumpPossibilitysWithoutMarking(it.getCurrentField()->getFieldNumber())){
+                jumpPossibilitys++;
+            }
+        }
+        ++it;
+    }
+    if(it.getCurrentField()->occupied()){
+        // if getJumpPossibilitys returns true, ++jumpPossibilitys
+        if(getJumpPossibilitysWithoutMarking(it.getCurrentField()->getFieldNumber())){
+            jumpPossibilitys++;
+        }
+    }
+
+    if(jumpPossibilitys == 0){
+        m_stillCanWinn = false;
+        emit stillCanWinnChanged();
+    }
+
+    m_movesLeft = jumpPossibilitys;
+    emit movesLeftChanged();
+}
+
+QString GameEngine::history() const
+{
+    return m_gameHistory;
+}
+
+int GameEngine::movesLeft() const
+{
+    return m_movesLeft;
+}
+
+bool GameEngine::stillCanWinn() const
+{
+    return m_stillCanWinn;
+}
+
+void GameEngine::appendToHistory(QString moveString)
+{
+    m_gameHistory.append(moveString);
+    emit historyChanged();
+}
+
 
 void GameEngine::fieldClicked(int fieldNumber)
 {
     qDebug() << "###################################################";
     qDebug() << "Field Number " << fieldNumber << "clicked";
-
+    checkMovesLeft();
 
     // check if something is marked
     switch(somethingMarked()){
@@ -240,6 +358,7 @@ void GameEngine::fieldClicked(int fieldNumber)
     case false:
         qDebug() << "nothing marked, check jumppossibilitys";
         getJumpPossibilitys(fieldNumber);
+        checkMovesLeft();
         break;
 
         // something is marked
@@ -249,12 +368,15 @@ void GameEngine::fieldClicked(int fieldNumber)
         if(!isPossibleToMove(fieldNumber)){
             //qDebug() << "something marked but not clicked on a possibility to jump";
             resetFieldMarker();
+            checkMovesLeft();
             break;
             // else i have clicked on a possible Field to make the move
         }else{
-            qDebug() << "---------> JUMP from " << m_markedFieldNumber << "->" << fieldNumber << " <---------";
+            qDebug() << "---------> JUMP from " << m_markedFieldNumber << "->" << fieldNumber;
+            appendToHistory(QString::number(m_markedFieldNumber) + "->" + QString::number(fieldNumber) +"\n");
             jump(fieldNumber);
             resetFieldMarker();
+            checkMovesLeft();
             break;
         }
     }
@@ -268,8 +390,25 @@ void GameEngine::rightClicked(int fieldNumber)
     while(it.getCurrentNumber() != fieldNumber){
         ++it;
     }
-    qDebug() << "~~~~~~~~~~~~~~~~occupacy from field" << fieldNumber << "changed by User from" << it.getCurrentField()->occupied() << "to" << !it.getCurrentField()->occupied();
+    qDebug() << "~~~~~~~~~~occupacy from field" << fieldNumber << "changed by User from" << it.getCurrentField()->occupied() << "to" << !it.getCurrentField()->occupied();
     it.getCurrentField()->setOccupied(!it.getCurrentField()->occupied());
+    appendToHistory(QString::number(fieldNumber) + "->" + "!\n");
+    checkMovesLeft();
+}
+
+void GameEngine::newGameClicked()
+{
+    Iterator it(m_gameBoard);
+    it.resetToFirst();
+    while(it.getCurrentField() != m_gameBoard->getLastField()){
+        it.getCurrentField()->setOccupied(true);
+        ++it;
+    }
+    it.getCurrentField()->setOccupied(true);
+    m_gameHistory = "";
+    emit historyChanged();
+    m_stillCanWinn = true;
+    emit stillCanWinnChanged();
 
 }
 

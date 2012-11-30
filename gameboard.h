@@ -10,7 +10,6 @@
 class GameBoard : public QObject
 {
     Q_OBJECT
-
     Q_PROPERTY(int fieldCount READ fieldCount)
 
 public:
