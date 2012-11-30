@@ -26,10 +26,9 @@ Rectangle {
 
     }
 
-//    EuropeanBoardItem{
-//        visible: false
-//    }
     EnglishBoardItem{}
+
+    //EuropeanBoardItem{}
 
 
     Text {
@@ -51,14 +50,14 @@ Rectangle {
         Button {
             id: newGameButton
             anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-            text: "New Game"
-            onClicked: engine.newGameClicked()
+            text: "New game with european board"
+            onClicked: engine.newGameClicked(":/european.txt");
         }
 
         Button {
             anchors { left: newGameButton.right; verticalCenter: parent.verticalCenter }
-            text: "Testbutton"
-            onClicked: console.log("blabla")
+            text: "New game with english board"
+            onClicked: engine.newGameClicked(":/english.txt")
         }
 
         Text {

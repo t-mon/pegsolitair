@@ -16,6 +16,10 @@ public:
 private:
     QmlApplicationViewer *m_viewer;
     GameEngine *m_engine;
+    QString m_boardType;
+
+public slots:
+
 };
 
 #endif // CORE_H

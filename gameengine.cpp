@@ -4,10 +4,13 @@
 GameEngine::GameEngine(QObject *parent) :
     QObject(parent)
 {
-    m_stillCanWinn = true;
     FileParser parser;
-    m_gameBoard = parser.createBoard(":/english.txt");
+    m_boardType = ":/english.txt";
+    m_gameBoard = parser.createBoard(m_boardType);
     // now the empty linked Board is created
+    m_stillCanWinn = true;
+    checkMovesLeft();
+
     m_markedFieldNumber = -1;
 }
 
@@ -325,6 +328,11 @@ QString GameEngine::history() const
     return m_gameHistory;
 }
 
+QString GameEngine::boardType() const
+{
+    return m_boardType;
+}
+
 int GameEngine::movesLeft() const
 {
     return m_movesLeft;
@@ -444,18 +452,26 @@ void GameEngine::rightClicked(int fieldNumber)
     checkWinnState();
 }
 
-void GameEngine::newGameClicked()
+void GameEngine::newGameClicked(QString boardType)
 {
-    Iterator it(m_gameBoard);
-    it.resetToFirst();
-    while(it.getCurrentField() != m_gameBoard->getLastField()){
+    if(boardType == m_boardType){
+        Iterator it(m_gameBoard);
+        it.resetToFirst();
+        while(it.getCurrentField() != m_gameBoard->getLastField()){
+            it.getCurrentField()->setOccupied(true);
+            ++it;
+        }
         it.getCurrentField()->setOccupied(true);
-        ++it;
+        resetHistory();
+        m_stillCanWinn = true;
+        emit stillCanWinnChanged();
+    }else{
+        FileParser parser;
+        m_boardType = boardType;
+        emit boardTypeChanged();
+        m_gameBoard = parser.createBoard(boardType);
+
     }
-    it.getCurrentField()->setOccupied(true);
-    resetHistory();
-    m_stillCanWinn = true;
-    emit stillCanWinnChanged();
 
 }
 

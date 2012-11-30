@@ -10,6 +10,8 @@ class GameEngine : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString history READ history NOTIFY historyChanged)
+    Q_PROPERTY(QString boardType READ boardType NOTIFY boardTypeChanged)
+
     Q_PROPERTY(int movesLeft READ movesLeft() NOTIFY movesLeftChanged)
     Q_PROPERTY(bool stillCanWinn READ stillCanWinn() NOTIFY stillCanWinnChanged)
     Q_PROPERTY(bool winnState READ winnState() NOTIFY winnStateChanged)
@@ -22,8 +24,10 @@ public:
 
 private:
     GameBoard *m_gameBoard;
+    QString m_boardType;
 
     QString history() const;
+    QString boardType() const;
     int movesLeft() const;
     bool stillCanWinn() const;
     bool winnState() const;
@@ -50,6 +54,7 @@ private:
 
 signals:
     void historyChanged();
+    void boardTypeChanged();
     void movesLeftChanged();
     void stillCanWinnChanged();
     void winnStateChanged();
@@ -57,7 +62,7 @@ signals:
 public slots:
     void fieldClicked(int fieldNumber);
     void rightClicked(int fieldNumber);
-    void newGameClicked();
+    void newGameClicked(QString boardType);
 };
 
 #endif // GAMEENGINE_H

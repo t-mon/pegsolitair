@@ -7,6 +7,7 @@ Item{
     anchors.bottom: toolBar.top
     anchors.right: gameHistory.left
     anchors.left: screen.left
+    visible: engine.boardType == ":/european.txt"
 
     Column{
         anchors.centerIn: parent

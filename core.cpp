@@ -22,6 +22,7 @@ Core::Core()
     m_viewer = new QmlApplicationViewer();
     m_viewer->rootContext()->setContextProperty("engine", m_engine);
     m_viewer->rootContext()->setContextProperty("board", m_engine->board());
+    m_viewer->rootContext()->setContextProperty("core",this);
 
     m_viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     m_viewer->setMainQmlFile(QLatin1String("qml/pegsolitair/main.qml"));
