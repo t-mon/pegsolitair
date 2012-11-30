@@ -5,18 +5,33 @@ Rectangle {
     id: window
     width: 900
     height: 750
+    anchors.fill: parent
+    anchors.centerIn: parent
 
     Column{
         anchors.fill: parent
-        EuropeanBoardItem{
+        Rectangle{
             anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
+            width: parent.width
+            height: 100
+            color: "gray"
+
         }
-//        Text{
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            anchors.baseline: parent.baseline
-//            text: "This is the european board of the game Peg Solitair \nclick with the right button on a field"
-//        }
+        EuropeanBoardItem{
+//            anchors.top: parent.top
+//            anchors.left: parent.left
+//            anchors.right: parent.right
+        }
+
     }
+
+
+
+
+    //        Text{
+    //            anchors.horizontalCenter: parent.horizontalCenter
+    //            anchors.baseline: parent.baseline
+    //            text: "This is the european board of the game Peg Solitair \nclick with the right button on a field"
+    //        }
+
 }

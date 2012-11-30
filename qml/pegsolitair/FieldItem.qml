@@ -5,13 +5,13 @@ import pegsolitaire 1.0
 Item {
     id: fieldItem
     property int fieldNumber
-    width: 90
-    height: 90
+    width: 80
+    height: 80
     Rectangle{
         anchors.fill: parent
         radius: 45
         border.color: board.fieldAt(fieldNumber).possibleToMove ? "green" : "transparent"
-        border.width: 5
+        border.width: 4
         color: "transparent"
         Rectangle{
             anchors.centerIn: parent
@@ -19,7 +19,7 @@ Item {
             height: parent.height-10
             radius: 40
             border.color: board.fieldAt(fieldNumber).marked ? "red" : "black"
-            border.width: 5
+            border.width: 4
             color: board.fieldAt(fieldNumber).occupied ? "steelblue" : "white"
             Text {
                 anchors.centerIn: parent
