@@ -476,8 +476,11 @@ void GameEngine::newGameClicked(QString boardType)
     }else{
         FileParser parser;
         m_boardType = boardType;
-        emit boardTypeChanged();
+        if(m_gameBoard) {
+            m_gameBoard->deleteLater();
+        }
         m_gameBoard = parser.createBoard(boardType);
+        emit boardTypeChanged();
 
     }
 

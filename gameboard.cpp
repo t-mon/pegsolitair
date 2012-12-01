@@ -44,11 +44,13 @@ int GameBoard::fieldCount()
 
 Field *GameBoard::fieldAt(int index)
 {
-    Q_ASSERT(index < m_fieldCount);
+    //Q_ASSERT(index < m_fieldCount);
 
     Iterator it(this);
     it.resetToFirst();
+    qDebug() << "starting";
     while (it.getCurrentNumber() < index) {
+        qDebug() << "got current" << it.getCurrentNumber();
         ++it;
     }
     return it.getCurrentField();

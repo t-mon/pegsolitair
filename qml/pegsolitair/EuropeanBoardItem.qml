@@ -7,7 +7,7 @@ Item{
     anchors.bottom: toolBar.top
     anchors.right: gameHistory.left
     anchors.left: screen.left
-    visible: engine.boardType == ":/european.txt"
+//    visible: engine.boardType == ":/european.txt"
 
     Column{
         anchors.centerIn: parent
@@ -62,26 +62,26 @@ Item{
                 }
             }
         }
-        Row{
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 12
-            Repeater{
-                model: 5
-                FieldItem{
-                    fieldNumber: index + 29
-                }
-            }
-        }
-        Row{
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: 12
-            Repeater{
-                model: 3
-                FieldItem{
-                    fieldNumber: index + 34
-                }
-            }
-        }
+//        Row{
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            spacing: 12
+//            Repeater{
+//                model: 5
+//                FieldItem{
+//                    fieldNumber: index + 29
+//                }
+//            }
+//        }
+//        Row{
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            spacing: 12
+//            Repeater{
+//                model: 3
+//                FieldItem{
+//                    fieldNumber: index + 34
+//                }
+//            }
+//        }
     }
 }
 

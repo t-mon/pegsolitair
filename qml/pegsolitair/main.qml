@@ -25,11 +25,11 @@ Rectangle {
         }
     }
 
-
-    EnglishBoardItem{}
-
-    //EuropeanBoardItem{}
-
+    Loader {
+        id: boardLoader
+        anchors.fill: parent
+        source: "EnglishBoardItem.qml"
+    }
 
     Text {
         id: gameOverText
@@ -51,13 +51,21 @@ Rectangle {
             id: newGameButton
             anchors { left: parent.left; verticalCenter: parent.verticalCenter }
             text: "New game with european board"
-            //onClicked: engine.newGameClicked(":/european.txt");
+            onClicked: {
+                boardLoader.source = ""
+                engine.newGameClicked(":/european.txt");
+                boardLoader.source = "EuropeanBoardItem.qml"
+            }
         }
 
         Button {
             anchors { left: newGameButton.right; verticalCenter: parent.verticalCenter }
             text: "New game with english board"
-            onClicked: engine.newGameClicked(":/english.txt")
+            onClicked: {
+                boardLoader.source = ""
+                engine.newGameClicked(":/english.txt")
+                boardLoader.source = "EnglishBoardItem.qml"
+            }
         }
 
         Button {
