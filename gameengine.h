@@ -46,6 +46,7 @@ private:
     void jump(int fieldNumber);
     int checkMovesLeft();
 
+
     int m_markedFieldNumber;
     int m_movesLeft;
     QString m_gameHistory;
@@ -66,6 +67,8 @@ public slots:
     void rightClicked(int fieldNumber);
     void newGameClicked(QString boardType);
     void safeHistory();
+    bool isBoardSolvable();
+
 };
 
 #endif // GAMEENGINE_H

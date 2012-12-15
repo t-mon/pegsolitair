@@ -2,8 +2,8 @@
 import QtQuick 1.1
 
 Item{
-    id: gameBoard
-    anchors.top: parent.top
+    id: gameBoardEnglish
+    anchors.top: screen.top
     anchors.bottom: toolBar.top
     anchors.right: gameHistory.left
     anchors.left: screen.left

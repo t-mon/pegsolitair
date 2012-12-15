@@ -64,7 +64,7 @@ GameBoard *FileParser::createBoard(QString fileName)
 
     for(int i = 0; i < fields; i++){
         //gameIterator.insert(i == 0 ? false : true,i,0,0,0,0,0,0,0);
-        gameIterator.insert(true,i,0,0,0,0,0,0,0);
+        gameIterator.insert(false,i,0,0,0,0,0,0,0);
         ++gameIterator;
     }
 

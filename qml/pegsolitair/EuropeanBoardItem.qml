@@ -2,8 +2,8 @@
 import QtQuick 1.1
 
 Item{
-    id: gameBoard
-    anchors.top: parent.top
+    id: gameBoardEuropean
+    anchors.top: screen.top
     anchors.bottom: toolBar.top
     anchors.right: gameHistory.left
     anchors.left: screen.left
@@ -62,26 +62,26 @@ Item{
                 }
             }
         }
-//        Row{
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            spacing: 12
-//            Repeater{
-//                model: 5
-//                FieldItem{
-//                    fieldNumber: index + 29
-//                }
-//            }
-//        }
-//        Row{
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            spacing: 12
-//            Repeater{
-//                model: 3
-//                FieldItem{
-//                    fieldNumber: index + 34
-//                }
-//            }
-//        }
+        Row{
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 12
+            Repeater{
+                model: 5
+                FieldItem{
+                    fieldNumber: index + 29
+                }
+            }
+        }
+        Row{
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 12
+            Repeater{
+                model: 3
+                FieldItem{
+                    fieldNumber: index + 34
+                }
+            }
+        }
     }
 }
 

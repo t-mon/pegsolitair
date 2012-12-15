@@ -1,4 +1,5 @@
 #include "gameengine.h"
+#include "searchalgorithm.h"
 #include <QDebug>
 #include <QDateTime>
 
@@ -6,7 +7,7 @@ GameEngine::GameEngine(QObject *parent) :
     QObject(parent)
 {
     FileParser parser;
-    m_boardType = ":/english.txt";
+    m_boardType = ":/european.txt";
     m_gameBoard = parser.createBoard(m_boardType);
     // now the empty linked Board is created
     m_stillCanWinn = true;
@@ -324,6 +325,16 @@ int GameEngine::checkMovesLeft()
     return jumpPossibilitys;
 }
 
+bool GameEngine::isBoardSolvable()
+{
+    qDebug() << "START SEARCH SOLUTION";
+    //m_gameBoard->print();
+    SearchAlgorithm df(m_gameBoard);
+    df.search();
+    QString solution = df.printSolution();
+    appendToHistory(solution);
+}
+
 QString GameEngine::history() const
 {
     return m_gameHistory;
@@ -363,6 +374,7 @@ void GameEngine::appendToSafeHistory(QString moveString)
 void GameEngine::resetHistory()
 {
     m_gameHistory = "";
+    m_safeHistoryString = "";
     emit historyChanged();
 }
 

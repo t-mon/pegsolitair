@@ -10,6 +10,8 @@ Rectangle {
 
     SystemPalette { id: activePalette }
 
+
+
     Rectangle{
         id: gameHistory
         anchors.top: parent.top
@@ -28,7 +30,7 @@ Rectangle {
     Loader {
         id: boardLoader
         anchors.fill: parent
-        source: "EnglishBoardItem.qml"
+        source: engine.boardType == ":/european.txt" ? "EuropeanBoardItem.qml" : "EnglishBoardItem.qml"
     }
 
     Text {
@@ -50,7 +52,7 @@ Rectangle {
         Button {
             id: newGameButton
             anchors { left: parent.left; verticalCenter: parent.verticalCenter }
-            text: "New game with european board"
+            text: "New european board"
             onClicked: {
                 boardLoader.source = ""
                 engine.newGameClicked(":/european.txt");
@@ -58,21 +60,27 @@ Rectangle {
             }
         }
 
-        Button {
-            anchors { left: newGameButton.right; verticalCenter: parent.verticalCenter }
-            text: "New game with english board"
-            onClicked: {
-                boardLoader.source = ""
-                engine.newGameClicked(":/english.txt")
-                boardLoader.source = "EnglishBoardItem.qml"
-            }
-        }
+//        Button {
+//            anchors { left: newGameButton.right; verticalCenter: parent.verticalCenter }
+//            text: "New english board"
+//            onClicked: {
+//                boardLoader.source = ""
+//                engine.newGameClicked(":/english.txt")
+//                boardLoader.source = "EnglishBoardItem.qml"
+//            }
+//        }
 
         Button {
             anchors { right: score.left; verticalCenter: parent.verticalCenter }
-            text: "Safe History"
-            onClicked: engine.safeHistory();
+            text: "Solve"
+            onClicked: engine.isBoardSolvable();
         }
+
+//        Button {
+//            anchors { right: score.left; verticalCenter: parent.verticalCenter }
+//            text: "Safe History"
+//            onClicked: engine.safeHistory();
+//        }
 
         Text {
             id: score

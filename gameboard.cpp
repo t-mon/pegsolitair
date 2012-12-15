@@ -1,6 +1,9 @@
 #include "gameboard.h"
 #include "iterator.h"
+#include <iostream>
 #include <QDebug>
+
+using namespace std;
 
 GameBoard::GameBoard(int fieldCount, QObject *parent) :
     QObject(parent),
@@ -37,6 +40,17 @@ bool GameBoard::isEmpty()
     return (m_first == 0);
 }
 
+void GameBoard::print()
+{
+    Iterator it(this);
+    it.resetToFirst();
+    cout << "   ";
+    for(int i = 0; i<3; i++){
+        cout << it.getCurrentField()->occupied() ? "#" : "0";
+    }
+
+}
+
 int GameBoard::fieldCount()
 {
     return m_fieldCount;
@@ -48,9 +62,9 @@ Field *GameBoard::fieldAt(int index)
 
     Iterator it(this);
     it.resetToFirst();
-    qDebug() << "starting";
+    //qDebug() << "starting";
     while (it.getCurrentNumber() < index) {
-        qDebug() << "got current" << it.getCurrentNumber();
+        //qDebug() << "got current" << it.getCurrentNumber();
         ++it;
     }
     return it.getCurrentField();
